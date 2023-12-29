@@ -8,7 +8,7 @@ class Cart(object):
         self.session = request.session # 장고 뷰에서 사용했던 request가 들어있음.
         cart = self.session.get(settings.CART_ID)
         if not cart:
-            cart = self.session[settings.CART_ID]
+            cart = self.session[settings.CART_ID] = {}
         self.cart = cart # 카트 객체의 현재 카트는 세션에서 불러 온 카트 혹은 새로 만든 카드야.라고 선언함.
 
     def __len__(self): # 이터레이터 등을 쓸 때 몇개 들어있는지 
