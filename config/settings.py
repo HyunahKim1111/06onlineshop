@@ -13,6 +13,15 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 import pymysql
+import environ
+
+#secret key 설정
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
+# reading .env file
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -45,6 +54,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.naver',
+    'cart',
 ]
 
 MIDDLEWARE = [
@@ -132,7 +142,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 AWS_ACCESS_KEY_ID = 'my-key'
-AWS_SECRET_ACCESS_KEY ='my-key'
+AWS_SECRET_ACCESS_KEY = 'my-password'
 
 AWS_REGION = 'ap-northeast-2'
 AWS_STORAGE_BUCKET_NAME = 'djagno-onlineshop-static'
@@ -143,10 +153,16 @@ AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
 }
 AWS_DEFAULT_ACL = 'public-read'
-AWS_LOCATION = ''
+AWS_LOCATION = 'static'
 
 STATIC_URL = f'http://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR,'static')
+]
+DEFAULT_FILE_STORAGE = 'config.s3media.MediaStorage'
+
+CART_ID = 'cart_item'
 
 
 STATIC_URL = 'static/'
@@ -156,11 +172,13 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTHENTICATION_BACKENDS = [
+
+AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend', # 기본 장고에서 사용하는 기본 유저모델에대한 백엔드를 의미
     'allauth.account.auth_backends.AuthenticationBackend', # 소셜로그인을 사용하는 인증체계가 있음.
-]
+)
 
 SITE_ID = 1
 
 LOGIN_REDIRECT_URL = '/'
+
