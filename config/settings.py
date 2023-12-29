@@ -141,8 +141,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-AWS_ACCESS_KEY_ID = 'my-key'
-AWS_SECRET_ACCESS_KEY = 'my-password'
+AWS_ACCESS_KEY_ID = 'AKIA2OXBD34GRSEN7FGO'
+AWS_SECRET_ACCESS_KEY = ''
 
 AWS_REGION = 'ap-northeast-2'
 AWS_STORAGE_BUCKET_NAME = 'djagno-onlineshop-static'
